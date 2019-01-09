@@ -254,46 +254,6 @@ void mobilenet_ssd_run(const ncnn::Net& net)
     ex.extract("detection_out", out);
 }
 
-void myNet_init(ncnn::Net& net)
-{
-	net.load_param("MNet18_v2_3.param");
-}
-
-void myNet_run(const ncnn::Net& net)
-{
-	ncnn::Extractor ex = net.create_extractor();
-
-	ncnn::Mat in(256, 256, 3);
-	ex.input("data", in);
-
-	ncnn::Mat out1, out2, out3, out4, out5, out6, out7, out8;
-	ex.extract("detect_6_2_cls_softmax_6_2", out1);
-	ex.extract("detect_6_2_reg", out2);
-	ex.extract("detect_fc7_cls_softmax_fc7", out3);
-	ex.extract("detect_fc7_reg", out4);
-	ex.extract("detect_5_3_cls_softmax_5_3", out5);
-	ex.extract("detect_5_3_reg", out6);
-	ex.extract("detect_4_3_cls_softmax_4_3", out7);
-	ex.extract("detect_4_3_reg", out8);
-}
-
-void myNet_track_init(ncnn::Net& net)
-{
-	net.load_param("MNet7_track.param");
-}
-
-void myNet_track_run(const ncnn::Net& net)
-{
-	ncnn::Extractor ex = net.create_extractor();
-
-	ncnn::Mat in(80, 80, 3);
-	ex.input("data", in);
-
-	ncnn::Mat out1, out2;
-	ex.extract("detect_4_3_cls_softmax_4_3", out1);
-	ex.extract("detect_4_3_reg", out2);
-}
-
 int main(int argc, char** argv)
 {
     int loop_count = 4;
@@ -325,10 +285,6 @@ int main(int argc, char** argv)
     fprintf(stderr, "powersave = %d\n", ncnn::get_cpu_powersave());
 
     // run
-	benchmark("myNet", myNet_init, myNet_run);
-	
-	benchmark("myNet_track", myNet_track_init, myNet_track_run);
-	
     benchmark("squeezenet", squeezenet_init, squeezenet_run);
 
     benchmark("mobilenet", mobilenet_init, mobilenet_run);

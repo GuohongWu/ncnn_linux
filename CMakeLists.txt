@@ -21,7 +21,7 @@ endif()
 project(ncnn)
 
 option(NCNN_OPENMP "openmp support" ON)
-option(NCNN_STDIO "load model from external file" ON)
+option(NCNN_STDIO "load model from external file" OFF)
 option(NCNN_STRING "plain and verbose string" ON)
 option(NCNN_OPENCV "minimal opencv structure emulation" OFF)
 option(NCNN_BENCHMARK "print benchmark information for every layer" OFF)
@@ -65,7 +65,7 @@ endif()
 ##############################################
 
 # add_subdirectory(examples)
-# add_subdirectory(benchmark)
+#add_subdirectory(benchmark)
 add_subdirectory(src)
 if(NOT ANDROID AND NOT IOS)
 add_subdirectory(tools)
